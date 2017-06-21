@@ -1,0 +1,50 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Req Test</title>
+</head>
+
+<body>
+<form action="index.php" method="post" name="form_reg" id="form_reg">
+  <p><strong>Registro</strong></p>
+  <p>
+    <input name="tag" type="hidden" id="register" value="register">
+  </p>
+  <p>
+    <label for="name">Name:</label>
+    <input type="text" name="name" id="name">
+    <label for="email"><br>
+      <br>
+      Email:</label>
+    <input type="text" name="email" id="email">
+    <label for="email"><br>
+      <br>
+      Password:</label>
+    <input type="text" name="password" id="password">
+  </p>
+  <p>
+    <input name="btn_register" type="submit" id="btn_register" form="form_reg" value="Enviar">
+  </p>
+</form>
+<p>&nbsp;</p>
+<form action="index.php" method="post" name="form_login" id="form_login">
+  <p><strong>Login</strong></p>
+  <p>
+    <input name="tag" type="hidden" value="login">
+    <label for="email"><br>
+      <br>
+    Email:</label>
+    <input type="text" name="email" id="email">
+    <label for="email"><br>
+      <br>
+      Password:</label>
+    <input type="text" name="password" id="password">
+  </p>
+  <p>
+    <input name="btn_login" type="submit" form="form_login" value="Enviar">
+  </p>
+</form>
+<p>&nbsp;</p>
+</body>
+</html>
