@@ -1,39 +1,38 @@
--- MySQL dump 10.13  Distrib 5.6.22, for osx10.8 (x86_64)
---
--- Host: localhost    Database: checkapp_login
--- ------------------------------------------------------
--- Server version	5.6.24
+drop database checkapp;
+create database checkapp;
+use checkapp;
+create table users(
+    id int(11) primary key auto_increment,
+    unique_id varchar(23) not null unique,
+    name varchar(255) not null,
+    chatuid varchar(255) not null unique,
+    email varchar(255) not null unique,
+    encrypted_password varchar(255) not null, 
+    salt varchar(10) not null,
+    created_at datetime,
+    updated_at datetime null
+);
+create table groups(
+    id int(11) primary key unique,
+    groupName varchar(255) not null,
+    groupDescription varchar(2000) not null,
+    language varchar(10) not null,
+    version int(11)
+);
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+create table groupsByUsers(
+    idUser int(11) NOT NULL,
+    idGroup int(11) NOT NULL,
+    isAdmin int(11) DEFAULT 0,
+    description varchar(255) not null,
+    CONSTRAINT pk_GroupsByUsers PRIMARY KEY (idUser, idGroup)
+);
 
---
--- Table structure for table `users`
---
+insert into groupsByUsers (idUser, idGroup) VALUES (1,1); 
 
-DROP TABLE IF EXISTS `users`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `users` (
-  `uid` int(11) NOT NULL AUTO_INCREMENT,
-  `unique_id` varchar(23) NOT NULL,
-  `name` varchar(50) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `encrypted_password` varchar(80) NOT NULL,
-  `salt` varchar(10) NOT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`uid`),
-  UNIQUE KEY `unique_id` (`unique_id`),
-  UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+CREATE USER 'login_user'@'localhost' IDENTIFIED BY 'FSLe6IOCZy5p';
+GRANT ALL PRIVILEGES ON checkapp.users TO 'login_user'@'localhost';
+GRANT ALL PRIVILEGES ON checkapp.groups TO 'login_user'@'localhost';
+GRANT ALL PRIVILEGES ON checkapp.groupsByUsers TO 'login_user'@'localhost';
+FLUSH PRIVILEGES;
 
